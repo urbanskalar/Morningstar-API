@@ -1,6 +1,6 @@
 # Morningstar API
 
-This class aims to provide data from morningstar API. It will work for as long as Morningstar does not change their API.Module is made of different definitions that try to get different reports from http://financials.morningstar.com.
+This class aims to provide data from morningstar API. It will work for as long as Morningstar does not change their API. Module is made of different definitions that try to get different reports from http://financials.morningstar.com.
 
 Definition `getKeyRatios(ticker, market)` returns key ratios table in pandas.Dataframe format. Below is an example for `'AAPL'` ticker.
 ```
@@ -114,7 +114,7 @@ Definition `getHistoricPrices(frequency, ticker, market)` returns historic marke
 [4015 rows x 6 columns]
 ```
 
-Definition `getAllData(ticker, market)` returns all data that is possible to gather from morningstar api as dictionary of pandas.Dataframe tables. Dictionary includes tables with the following keys:
+Definition `getAllData(ticker, market)` returns all data that is possible to gather from morningstar API as dictionary of pandas.Dataframe tables. Dictionary includes tables with the following keys:
 ```
 key_ratios
 annual:income_statement
