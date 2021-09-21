@@ -1,8 +1,6 @@
 # Morningstar API
 
-This class aims to provide data from morningstar API. It will work for as long as Morningstar does not change their API.
-
-Module is made of different definitions that try to get different reports from http://financials.morningstar.com.
+This class aims to provide data from morningstar API. It will work for as long as Morningstar does not change their API.Module is made of different definitions that try to get different reports from http://financials.morningstar.com.
 
 Definition `getKeyRatios(ticker, market)` returns key ratios table in pandas.Dataframe format. Below is an example for `'AAPL'` ticker.
 ```
@@ -22,9 +20,7 @@ Definition `getKeyRatios(ticker, market)` returns key ratios table in pandas.Dat
 [96 rows x 12 columns]
 ```
 
-
-
-Definition `getFinancials(report, period, ticker, market)` returns different financial tables in pandas.Dataframe format. Parameter `report` specifies which financial table we are interested in. Possible values are `'income_statement'`, `'balance_sheet'` or `'cash_flow'` Parameter `period` specifies period of provided data. Possible values are `'annual'` or `'quarterly'` Below is an example of annual income statement for `'AAPL'` ticker.
+Definition `getFinancials(report, period, ticker, market)` returns different financial tables in pandas.Dataframe format. Parameter `report` specifies which financial table we are interested in. Possible values are `'income_statement'`, `'balance_sheet'` or `'cash_flow'`. Parameter `period` specifies period of provided data. Possible values are `'annual'` or `'quarterly'`. Below is an example of annual income statement for `'AAPL'` ticker.
 ```
             Fiscal year ends in September. USD.       2016-09       2017-09       2018-09       2019-09       2020-09           TTM
 0                                       Revenue  2.156390e+11  2.292340e+11  2.655950e+11  2.601740e+11  2.745150e+11  3.471550e+11
@@ -51,4 +47,88 @@ Definition `getFinancials(report, period, ticker, market)` returns different fin
 21                                       EBITDA  7.333300e+04  7.656900e+04  8.704600e+04  8.186000e+04  8.102000e+04  1.144640e+05
 ```
 
-Definition `getHistoricPriceRatios(ticker, market)` returns hist
+Definition `getHistoricPriceRatios(ticker, market)` returns historic price ratios in pandas.Dataframe format. This outpus is not perfect as it does not show dates for each column. Comparing results to data from Morningstar webpage, I was not able to figure out what last column represents (11). The others however represent past years. So column 10 is actually current year - 1, column 9 is current year - 2, etc. Below is an example of historic price ratios report for `'AAPL'` ticker.
+```
+                 0     1     2     3     4     5     6     7     8     9     10    11
+0    Price/Earnings   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN
+1              AAPL  14.6  12.1  14.1  17.1  11.4  13.9  18.4  13.2  24.7  40.5  27.9
+2           S&P 500  13.7  15.0  18.6  18.6  19.0  20.3  22.7  17.1  22.6  28.3  25.3
+3        Price/Book   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN
+4              AAPL   4.9   3.9   4.1   5.8   4.9   4.7   6.4   7.0  14.2  34.1  36.8
+5           S&P 500   2.0   2.1   2.6   2.7   2.7   2.8   3.2   2.9   3.4   4.0   4.5
+6       Price/Sales   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN
+7              AAPL   3.5   3.1   3.1   3.7   2.6   3.0   3.9   3.0   5.2   8.5   7.0
+8           S&P 500   1.2   1.3   1.7   1.8   1.8   2.0   2.2   1.9   2.4   2.8   3.2
+9   Price/Cash Flow   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN
+10             AAPL  10.1   8.9   9.7  11.3   7.5   9.7  14.0  10.2  19.7  28.8  23.3
+11          S&P 500   8.5   9.2  11.2  11.5  11.5  12.4  14.3  11.6  14.4  16.6  18.1
+```
+
+Definition `getCurrentPriceRatios(ticker, market)` returns current price ratios table in pandas.Dataframe format. Below is an example for `'AAPL'` ticker.
+```
+                                           Unnamed: 0                                               AAPL                                       Industry Avg                                            S&P 500                                       AAPL 5Y Avg*                                         Unnamed: 5 Relative to Industry Relative to Industry.1  Unnamed: 8 Relative to S&P 500 Relative to S&P 500.1
+0                                                 NaN                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+1                                      Price/Earnings                                               27.9                                                  —                                               25.3                                               18.8                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+2                                                 NaN                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+3                                          Price/Book                                               36.8                                                  —                                                4.5                                                9.7                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+4                                                 NaN                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+5                                         Price/Sales                                                7.0                                                  —                                                3.2                                                4.0                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+6                                                 NaN                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+7                                     Price/Cash Flow                                               23.3                                                  —                                               18.1                                               16.7                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+8                                                 NaN                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+9                                    Dividend Yield %                                                0.6                                                  —                                                1.4                                                1.4                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+10                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+11                                   Price/Fair Value                                            Premium                                                  —                                                  —                                                  —                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+12                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                                                NaN                  NaN                    NaN         NaN                 NaN                   NaN
+13  Data as of 09/20/2021, *Price/Cash Flow uses 3...  Data as of 09/20/2021, *Price/Cash Flow uses 3...  Data as of 09/20/2021, *Price/Cash Flow uses 3...  Data as of 09/20/2021, *Price/Cash Flow uses 3...  Data as of 09/20/2021, *Price/Cash Flow uses 3...  Data as of 09/20/2021, *Price/Cash Flow uses 3...            –  Avg  +              –  Avg  +         NaN           –  Avg  +             –  Avg  +
+```
+
+Definition `getForwardPriceRatios(ticker, market)` returns forward price ratios table in pandas.Dataframe format. Below is an example for `'AAPL'` ticker.
+```
+               Unnamed: 0                    AAPL            Industry Avg                 S&P 500              Unnamed: 4 Relative to Industry Relative to Industry.1  Unnamed: 7 Relative to S&P 500 Relative to S&P 500.1
+0                     NaN                     NaN                     NaN                     NaN                     NaN                  NaN                    NaN         NaN                 NaN                   NaN
+1  Forward Price/Earnings                    25.6                       —                    21.8                     NaN                  NaN                    NaN         NaN                 NaN                   NaN
+2                     NaN                     NaN                     NaN                     NaN                     NaN                  NaN                    NaN         NaN                 NaN                   NaN
+3               PEG Ratio                     2.0                       —                       —                     NaN                  NaN                    NaN         NaN                 NaN                   NaN
+4                     NaN                     NaN                     NaN                     NaN                     NaN                  NaN                    NaN         NaN                 NaN                   NaN
+5       PEG Payback (Yrs)                    11.0                       —                       —                     NaN                  NaN                    NaN         NaN                 NaN                   NaN
+6                     NaN                     NaN                     NaN                     NaN                     NaN                  NaN                    NaN         NaN                 NaN                   NaN
+7  Data as of 09/20/2021.  Data as of 09/20/2021.  Data as of 09/20/2021.  Data as of 09/20/2021.  Data as of 09/20/2021.            –  Avg  +              –  Avg  +         NaN           –  Avg  +             –  Avg  +
+```
+
+Definition `getHistoricPrices(frequency, ticker, market)` returns historic market prices table in pandas.Dataframe format. Parameter `frequency` specifies frequency of data accuired in table. Possible values are `'daily'`, `'weekly'`, `'monthly'`, `'quarterly'` or `'annualy'`. Below is an example for `'AAPL'` ticker.
+```
+            Date    Open    High     Low   Close         Volume
+0     09/20/2021  143.80  144.84  141.27  142.94    123,478,863
+1     09/17/2021  148.82  148.82  145.76  146.06    129,868,824
+2     09/16/2021  148.44  148.97  147.22  148.79     68,034,149
+3     09/15/2021  148.56  149.44  146.37  149.03     83,281,315
+4     09/14/2021  150.35  151.07  146.91  148.12    109,296,295
+...          ...     ...     ...     ...     ...            ...
+4010  02/28/2006    2.56    2.59    2.43    2.45  1,255,103,220
+4011  02/27/2006    2.57    2.58    2.52    2.54    783,983,704
+4012  02/24/2006    2.57    2.60    2.54    2.55    252,514,472
+4013  02/23/2006    2.56    2.61    2.55    2.56    852,676,300
+4014  02/22/2006    2.46    2.56    2.43    2.55    963,722,648
+
+[4015 rows x 6 columns]
+```
+
+Definition `getAllData(ticker, market)` returns all data that is possible to gather from morningstar api as dictionary of pandas.Dataframe tables. Dictionary includes tables with the following keys:
+```
+key_ratios
+annual:income_statement
+quarterly:income_statement
+annual:balance_sheet
+quarterly:balance_sheet
+annual:cash_flow
+quarterly:cash_flow
+historic_price_ratios
+current_price_ratios
+forward_prices_ratios
+historic_prices:daily
+historic_prices:weekly
+historic_prices:monthly
+historic_prices:quarterly
+historic_prices:annualy
+```
